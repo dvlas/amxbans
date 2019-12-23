@@ -3,30 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9fdcf78f-d173-46ca-b990-ce27ecdeda29" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ban_list.php" beforeDir="false" afterPath="$PROJECT_DIR$/ban_list.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/config.inc.php" beforeDir="false" afterPath="$PROJECT_DIR$/include/config.inc.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/db.config.inc.php" beforeDir="false" afterPath="$PROJECT_DIR$/include/db.config.inc_.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/smarty/templates_c/%%2C^2C8^2C830EC2%%ban_list.tpl.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/smarty/templates_c/%%36^36B^36B8013A%%main_footer.tpl.php" beforeDir="false" afterPath="$PROJECT_DIR$/include/smarty/templates_c/%%36^36B^36B8013A%%main_footer.tpl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/smarty/templates_c/%%43^438^438FC765%%admin_ban_add_online.tpl.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/smarty/templates_c/%%6A^6A5^6A537DD8%%login.tpl.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/smarty/templates_c/%%72^729^729F949A%%admin_ban_add.tpl.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/smarty/templates_c/%%7A^7AD^7AD6A07A%%view.tpl.php" beforeDir="false" afterPath="$PROJECT_DIR$/include/smarty/templates_c/%%7A^7AD^7AD6A07A%%view.tpl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/smarty/templates_c/%%91^912^912211C9%%admin_list.tpl.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/smarty/templates_c/%%9D^9DD^9DDD4BE0%%admin_in.tpl.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/smarty/templates_c/%%AC^AC1^AC1385FF%%admin_index.tpl.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/smarty/templates_c/%%CF^CF0^CF0B35EB%%main_header.tpl.php" beforeDir="false" afterPath="$PROJECT_DIR$/include/smarty/templates_c/%%CF^CF0^CF0B35EB%%main_header.tpl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/smarty/templates_c/%%D0^D0B^D0BAFE5D%%search.tpl.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/datas.inc" beforeDir="false" afterPath="$PROJECT_DIR$/install/datas.inc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/functions.inc" beforeDir="false" afterPath="$PROJECT_DIR$/install/functions.inc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/language/lang.english.php" beforeDir="false" afterPath="$PROJECT_DIR$/install/language/lang.english.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/language/lang.russian.php" beforeDir="false" afterPath="$PROJECT_DIR$/install/language/lang.russian.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/step2.tpl" beforeDir="false" afterPath="$PROJECT_DIR$/install/step2.tpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/step4.tpl" beforeDir="false" afterPath="$PROJECT_DIR$/install/step4.tpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/tables.inc" beforeDir="false" afterPath="$PROJECT_DIR$/install/tables.inc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/language/lang.english.php" beforeDir="false" afterPath="$PROJECT_DIR$/language/lang.english.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/language/lang.russian.php" beforeDir="false" afterPath="$PROJECT_DIR$/language/lang.russian.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.php" beforeDir="false" afterPath="$PROJECT_DIR$/setup.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -97,7 +74,7 @@
       <workItem from="1577045550779" duration="7876000" />
       <workItem from="1577083733993" duration="10000" />
       <workItem from="1577125492121" duration="64000" />
-      <workItem from="1577133155522" duration="761000" />
+      <workItem from="1577133155522" duration="1246000" />
     </task>
     <servers />
   </component>

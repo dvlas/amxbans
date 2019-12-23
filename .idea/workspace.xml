@@ -3,7 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="9fdcf78f-d173-46ca-b990-ce27ecdeda29" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ban_list.php" beforeDir="false" afterPath="$PROJECT_DIR$/ban_list.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/config.inc.php" beforeDir="false" afterPath="$PROJECT_DIR$/include/config.inc.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/functions.inc.php" beforeDir="false" afterPath="$PROJECT_DIR$/include/functions.inc.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/menu.inc.php" beforeDir="false" afterPath="$PROJECT_DIR$/include/menu.inc.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/sql.inc.php" beforeDir="false" afterPath="$PROJECT_DIR$/include/sql.inc.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/view.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -74,7 +79,7 @@
       <workItem from="1577045550779" duration="7876000" />
       <workItem from="1577083733993" duration="10000" />
       <workItem from="1577125492121" duration="64000" />
-      <workItem from="1577133155522" duration="1246000" />
+      <workItem from="1577133155522" duration="6082000" />
     </task>
     <servers />
   </component>
@@ -98,9 +103,14 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/ban_list.php</url>
-          <line>51</line>
-          <option name="timeStamp" value="1" />
+          <url>file://$PROJECT_DIR$/include/menu.inc.php</url>
+          <line>26</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/view.php</url>
+          <line>186</line>
+          <option name="timeStamp" value="15" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -108,8 +118,15 @@
       <configuration name="setup.php">
         <watch expression="$pdo-&gt;query(&quot;SHOW TABLES FROM `&quot;.$dbdb.&quot;` LIKE '&quot;.$dbprefix.&quot;_%'&quot;)-&gt;columnCount()" language="PHP" />
       </configuration>
+      <configuration name="ban_list.php">
+        <watch expression="$query-&gt;execute()" language="PHP" />
+        <watch expression="$query-&gt;fetchAll()" language="PHP" />
+        <watch expression="$query-&gt;fetchAll(PDO::FETCH_ASSOC)" language="PHP" />
+      </configuration>
       <configuration name="PhpWebAppRunConfigurationType">
         <watch expression="new PDO($connectStr,$dbuser,'')" language="PHP" />
+        <watch expression="$query-&gt;fetch(PDO::FETCH_OBJ)" language="PHP" />
+        <watch expression="$query-&gt;fetch(PDO::FETCH_OBJ)[0]" language="PHP" />
       </configuration>
     </watches-manager>
   </component>

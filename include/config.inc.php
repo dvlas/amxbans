@@ -62,10 +62,11 @@ function getipbyhost($value = "") {
 
 //connect to db
 try {
-	$mysql		= new mysqli($config->db_host,$config->db_user,$config->db_pass, $config->db_db);
-	$enc = $mysql->set_charset("utf8");
-} catch (Exception $e) {
-	trigger_error($mysql->error);
+    $connectStr = "mysql:host={$config->db_host};dbname={$config->db_db};charset=utf8";
+	$mysql = new PDO($connectStr, $config->db_user,$config->db_pass);
+//	$enc = $mysql->set_charset("utf8");
+} catch (PDOException $e) {
+	trigger_error($e->getMessage());
 }
 
 $config->importdir		= $config->path_root."/tmp";
@@ -82,7 +83,8 @@ if(!isset($_SESSION["lang"])) $_SESSION["lang"]=$config->default_lang;
 //load smilies to global array
 if(empty($smilies)) {
 	$sql = $mysql->query("SELECT code, url, name FROM ".$config->db_prefix."_smilies ORDER BY id");
-	while (list($code, $url, $name) = $sql->fetch_array())
+	$sql->execute();
+	while (list($code, $url, $name) = $sql->fetch())
 	{
 		$name = stripslashes($name);
 		$name = htmlentities($name);
@@ -93,7 +95,8 @@ if(empty($smilies)) {
 //load bbcode tags to global array
 if(empty($bbcodes)) {
 	$sql = $mysql->query("SELECT open_tag, close_tag, url, name FROM ".$config->db_prefix."_bbcode ORDER BY id");
-	while (list($open_tag, $close_tag, $url, $name) = $sql->fetch_array())
+	$sql->execute();
+	while (list($open_tag, $close_tag, $url, $name) = $sql->fetch())
 	{
 		$name = stripslashes($name);
 		$name = htmlentities($name);

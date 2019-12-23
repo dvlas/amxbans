@@ -35,13 +35,13 @@ require_once("include/rcon_hl_net.inc");
 
 //fetch server_information
 $resource2	= $mysql->query("SELECT * FROM ".$config->db_prefix."_serverinfo ORDER BY hostname ASC") or die ($mysql->error);
-
+$resource2->execute();
 $server_array = array();
 $addons_array = array();
 $rules_array = array();
 $anticheat_array = array();
 $rules = "";
-while($result2 = $resource2->fetch_object()) {
+while($result2 = $resource2->fetch(PDO::FETCH_OBJ)) {
 
 	$split_address = explode (":", $result2->address);
 	$ip	= $split_address['0'];
@@ -168,12 +168,12 @@ while($result2 = $resource2->fetch_object()) {
  * 		Stats
  *
  */
-$stats['total']		= $mysql->query("SELECT bid FROM ".$config->db_prefix."_bans")->num_rows;
-$stats['permanent']	= $mysql->query("SELECT bid FROM ".$config->db_prefix."_bans WHERE ban_length = 0")->num_rows;
-$stats['active']	= $mysql->query("SELECT bid FROM ".$config->db_prefix."_bans WHERE ((ban_created+(ban_length*60)) > ".time()." OR ban_length = 0)")->num_rows;
+$stats['total']		= $mysql->query("SELECT bid FROM ".$config->db_prefix."_bans")->rowCount();
+$stats['permanent']	= $mysql->query("SELECT bid FROM ".$config->db_prefix."_bans WHERE ban_length = 0")->rowCount();
+$stats['active']	= $mysql->query("SELECT bid FROM ".$config->db_prefix."_bans WHERE ((ban_created+(ban_length*60)) > ".time()." OR ban_length = 0)")->rowCount();
 $stats['temp']		= $stats['active'] - $stats['permanent'];
-$stats['admins']	= $mysql->query("SELECT id FROM ".$config->db_prefix."_amxadmins")->num_rows;
-$stats['servers']	= $mysql->query("SELECT id FROM ".$config->db_prefix."_serverinfo")->num_rows;
+$stats['admins']	= $mysql->query("SELECT id FROM ".$config->db_prefix."_amxadmins")->rowCount();
+$stats['servers']	= $mysql->query("SELECT id FROM ".$config->db_prefix."_serverinfo")->rowCount();
 /*
  *
  * 		Latest Ban
@@ -181,12 +181,13 @@ $stats['servers']	= $mysql->query("SELECT id FROM ".$config->db_prefix."_serveri
  */
 $last_ban_arr = [];
 $lb	= $mysql->query("SELECT player_id, player_nick, ban_reason, ban_created, ban_length, ban_type FROM ".$config->db_prefix."_bans ORDER BY ban_created DESC LIMIT 1") or die ($mysql->error);
-$lb = $lb->fetch_object();
-if(!is_null($lb)){
+$lb->execute();
+$lb = $lb->fetch(PDO::FETCH_OBJ);
+if($lb){
     if(isset($lb->ban_length)) {
         $ban_length	= 0;
     } else {
-        $ban_length 	= ($lb->ban_created + ($lb->ban_length * 60));
+        $ban_length = ($lb->ban_created + ($lb->ban_length * 60));
     }
     if($lb->ban_type == "SI") {
         $steamid	= "SI";

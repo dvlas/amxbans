@@ -50,10 +50,12 @@ if(!$user_site) {
 	$page = "";
         //count activ bans
         $query = $mysql->query("SELECT COUNT(bid) FROM `".$config->db_prefix."_bans` WHERE `expired`=0") or die ($mysql->error);
-        $ban_count[0]=$query->fetch_row()[0];
+        $query->execute();
+        $ban_count[0]=$query->fetch()[0];
         //count all bans
         $query = $mysql->query("SELECT COUNT(bid) FROM `".$config->db_prefix."_bans`") or die ($mysql->error);
-        $ban_count[1]=$query->fetch_row()[0];
+        $query->execute();
+        $ban_count[1]=$query->fetch()[0];
         //calc max sites
         $ban_page_max=ceil($ban_count[0] / $config->bans_per_page);
     if(isset($_REQUEST["site"])) $page=(int)$_REQUEST["site"];
@@ -79,9 +81,9 @@ if(!$user_site) {
                                 LEFT JOIN `".$config->db_prefix."_serverinfo` AS se ON ba.server_ip=se.address
                                 LEFT JOIN `".$config->db_prefix."_amxadmins` AS aa ON (aa.steamid=ba.admin_nick OR aa.steamid=ba.admin_ip OR aa.steamid=ba.admin_id)
                                 WHERE ba.expired=0 ORDER BY ban_created DESC LIMIT ".$min.",".$config->bans_per_page) or die($mysql->error);
-
+        $query->execute();
         //build ban list array
-        while($result = $query->fetch_object()) {
+        while($result = $query->fetch(PDO::FETCH_OBJ)) {
                 if($result->expired==1) continue;
                 $steamid="";
                 $steamcomid="";

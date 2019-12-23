@@ -3,12 +3,16 @@
   <component name="ChangeListManager">
     <list default="true" id="9fdcf78f-d173-46ca-b990-ce27ecdeda29" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/ban_list.php" beforeDir="false" afterPath="$PROJECT_DIR$/ban_list.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/config.inc.php" beforeDir="false" afterPath="$PROJECT_DIR$/include/config.inc.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/functions.inc.php" beforeDir="false" afterPath="$PROJECT_DIR$/include/functions.inc.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/menu.inc.php" beforeDir="false" afterPath="$PROJECT_DIR$/include/menu.inc.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/sql.inc.php" beforeDir="false" afterPath="$PROJECT_DIR$/include/sql.inc.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/view.php" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+>>>>>>> bbb4143535bd467ad4ad4389be734eab4617fcf5
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -79,7 +83,11 @@
       <workItem from="1577045550779" duration="7876000" />
       <workItem from="1577083733993" duration="10000" />
       <workItem from="1577125492121" duration="64000" />
+<<<<<<< HEAD
       <workItem from="1577133155522" duration="6082000" />
+=======
+      <workItem from="1577133155522" duration="1246000" />
+>>>>>>> bbb4143535bd467ad4ad4389be734eab4617fcf5
     </task>
     <servers />
   </component>

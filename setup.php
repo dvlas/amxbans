@@ -101,7 +101,6 @@ $smarty->assign("next",false);
 if($sitenr==1) {
 	$smarty->assign("next",true);
 }
-
 /////////////// site 2 server settings /////////////////
 if($sitenr==2) {
 	$php_settings=array(
@@ -115,7 +114,6 @@ if($sitenr==2) {
 			"version_php"=>phpversion(),
 			"version_amxbans_web"=>$config->v_web,
 			"server_software"=>$_SERVER["SERVER_SOFTWARE"],
-			"mysql_version"=>mysqli_get_client_info(),
 			"bcmath"=>(extension_loaded('bcmath')=="1")?"_YES":"_NO",
 			"gmp"=>(extension_loaded('gmp')=="1")?"_YES":"_NO"
 		);
@@ -149,7 +147,7 @@ if($sitenr==3) {
 	$smarty->assign("checkvalue","_RECHECK");
 	$smarty->assign("dirs",$dirs);
 }
-
+$msg = null;
 /////////////// site 4 db /////////////////
 if($sitenr==4 && isset($_POST["check4"])) {
 	$_SESSION["dbcheck"]=false;
@@ -170,16 +168,22 @@ if($sitenr==4 && isset($_POST["check4"])) {
 	if($dbhost=="" || $dbuser=="" || $dbdb=="" || $dbprefix=="") {
 		$msg="_NOREQUIREDFIELDS";
 	}
-	
-	$mysql= new mysqli($dbhost,$dbuser,$dbpass, $dbdb);
-	if (mysqli_connect_errno()) $msg="_CANTCONNECT";
-	if(!$msg) {
-		$enc = @$mysql->set_charset('utf8');
-	}
+	try{
+        $connectStr = "mysql:dbname=".$dbdb.";host=".$dbhost.';charset=utf8';
+        $pdo = new PDO($connectStr,$dbuser,$dbpass);
+        $version = $pdo->query("select version()")->fetchAll();
+        if(isset($version[0]))
+        {
+            $version = $version[0][0];
+            $smarty->assign("version", $version);
+        }
+    }catch (PDOException $e){
+        $msg="_CANTCONNECT";
+    }
 	
 	//get user privileges
 	if(!$msg) {
-		$previleges=sql_get_privilege($mysql);
+		$previleges=sql_get_privilege($pdo);
 		$prev[]=array("name"=>"SELECT","value"=>in_array("SELECT",$previleges));
 		$prev[]=array("name"=>"INSERT","value"=>in_array("INSERT",$previleges));
 		$prev[]=array("name"=>"UPDATE","value"=>in_array("UPDATE",$previleges));
@@ -190,20 +194,20 @@ if($sitenr==4 && isset($_POST["check4"])) {
 			if(in_array(false,$v)) {$msg="_NOTALLPREVILEGES";break;}
 		}
 	}
+    $prefix_exists = false;
 	//check for existing tables
 	if(!$msg) {
 		//search for existing dbprefix
-		if($mysql->query("SHOW TABLES FROM `".$dbdb."` LIKE '".$dbprefix."\_%'")->num_rows) {
+		if($pdo->query("SHOW TABLES FROM `".$dbdb."` LIKE '".$dbprefix."_%'")->fetchAll()) {
 			$prefix_exists=true;
 			//search for field "imported" in bans table, added since 6.0
-			if( @$mysql->query("SHOW COLUMNS FROM `".$dbprefix."_bans` WHERE Field LIKE 'imported'")->num_rows) {
+			if( $pdo->query("SHOW COLUMNS FROM `".$dbprefix."_bans` WHERE Field LIKE 'imported'")->columnCount()) {
 				$prefix_isnew=true;
 			}
 		}
 	}
-	
-	$smarty->assign("prevs",$prev);
-	
+	$smarty->assign("prevs", $prev);
+
 	if(!$msg) {
 		if($prefix_exists) {
 			if($prefix_isnew) {
@@ -224,6 +228,7 @@ if($sitenr==4) $smarty->assign("checkvalue","_DBCHECK");
 
 /////////////// site 5 admin /////////////////
 if($sitenr==5 && isset($_POST["check5"])) {
+    $validate = [];
 	$_SESSION["admincheck"]=false;
 	$adminuser=trim($_POST["adminuser"]);
 	$adminpass=trim($_POST["adminpass"]);
@@ -266,32 +271,56 @@ if($sitenr==6) $smarty->assign("checkvalue","_STEP7");
 /////////////// site 7 end /////////////////
 if($sitenr==7 && $_SESSION["dbcheck"]==true && $_SESSION["admincheck"]==true && !isset($_POST["check7"])) {
 	// Open connection to database again
-	$mysql = new mysqli($_SESSION["dbhost"], $_SESSION["dbuser"], $_SESSION["dbpass"], $_SESSION["dbdb"]);
-	if (mysqli_connect_errno()) $msg="_CANTCONNECT";
+    $connectStr = "mysql:dbname=".$_SESSION["dbdb"].";host=".$_SESSION["dbhost"].';charset=utf8';
+
 	include("install/tables.inc");
 	//create db structure
-	foreach($table_create as $k => $v) {
-		$table=array("table"=>$k,"success"=>($mysql->query("CREATE TABLE ".$k." (".$v.") DEFAULT CHARSET=utf8")? "_CREATED" : "_ALREADYEXISTS"));
+    /** @var string $table_create */
+    foreach($table_create as $k => $v) {
+        $pdo = new PDO($connectStr,$_SESSION["dbuser"],$_SESSION["dbpass"]);
+        if ($pdo->errorCode()) $msg="_CANTCONNECT";
+        $sql = "CREATE TABLE {$k} ( {$v} )";
+		$table=[
+		    "table"=>$k,
+            "success"=> (
+                $pdo->exec($sql)
+                    ? "_CREATED"
+                    : "_ALREADYEXISTS"
+            )
+        ];
 		$tables[]=$table;
 	}
 	//get default data
 	include("install/datas.inc");
 	//create default data
+    /**
+     * @var $data_create []
+    */
 	foreach($data_create as $k => $v) {
-		$data=array("data"=>$k,"success"=>($mysql->query("INSERT INTO ".$k." ".$v)? "_INSERTED" : "_FAILED"));
+	    $sql = "INSERT INTO ".$k." ".$v;
+        $prepare = $pdo->prepare($sql)->execute();
+		$data=array("data"=>$k,"success"=>($prepare ? "_INSERTED" : "_FAILED"));
 		$datas[]=$data;
 	}
 	//create default websettings
-	$websettings_create=array("data"=>"_CREATEWEBSETTINGS","success"=>($mysql->query($websettings_query)? "_INSERTED" : "_FAILED"));
+	$websettings_create=array("data"=>"_CREATEWEBSETTINGS","success"=>($pdo->query($websettings_query)? "_INSERTED" : "_FAILED"));
 	//create default usermenu
-	$usermenu_create=array("data"=>"_CREATEUSERMENU","success"=>($mysql->query($usermenu_query)? "_INSERTED" : "_FAILED"));
+	$usermenu_create=array("data"=>"_CREATEUSERMENU","success"=>($pdo->query($usermenu_query)? "_INSERTED" : "_FAILED"));
 	//create webadmin userlevel
-	$webadmin_create[]=array("data"=>"_CREATEUSERLEVEL","success"=>($mysql->query($userlevel_query)? "_INSERTED" : "_FAILED"));
+	$webadmin_create[]=array("data"=>"_CREATEUSERLEVEL","success"=>($pdo->query($userlevel_query)? "_INSERTED" : "_FAILED"));
 	//create webadmin
-	$webadmin_create[]=array("data"=>"_CREATEWEBADMIN","success"=>($mysql->query($webadmin_query)? "_INSERTED" : "_FAILED"));
+    $webadmin_prepare = $pdo->prepare($webadmin_query)->execute([
+        ':adminuser' => $_SESSION['adminuser'],
+        ':adminpass' => $_SESSION["adminpass"],
+        ':adminemail' => $_SESSION["adminemail"],
+    ]);
+	$webadmin_create[]=array("data"=>"_CREATEWEBADMIN","success"=>($webadmin_prepare? "_INSERTED" : "_FAILED"));
 	//install default modules
+    /**
+     * @var $modules_install []
+    */
 	foreach($modules_install as $k => $v) {
-		$modul=array("name"=>$k,"success"=>($mysql->query($v)? "_INSERTED" : "_FAILED"));
+		$modul=array("name"=>$k,"success"=>($pdo->query($v)? "_INSERTED" : "_FAILED"));
 		$modules[]=$modul;
 	}
 
@@ -311,7 +340,10 @@ $content="<?php
 	$msg=write_cfg_file($config->path_root."/include/db.config.inc.php",$content);
 	$smarty->assign("content",$content);
 	//create first log ;-)
-	$mysql->query($log_query);
+    $pdo->prepare($log_query)->execute([
+        ':remoteaddr' => $pdo->quote($_SERVER["REMOTE_ADDR"]),
+        ':adminuser' => $pdo->quote($_SESSION['adminuser'])
+    ]);
 
 	$smarty->assign("tables",$tables);
 	$smarty->assign("datas",$datas);

@@ -1,5 +1,14 @@
 <div>
-	<div align="center" class="notice">{"_STEP4DESC"|lang}</div>
+	<div align="center" class="notice">
+		{"_STEP4DESC"|lang}<br>
+		{if $msg}
+			{if $version > 5.5}
+				<b>Your PDO version {$version}:</b> <img src="images/success.gif" />
+				{else}
+				<b>{"_WARNING_VERSION_PDO"|lang}:</b> <img src="images/cross.png" />
+			{/if}
+		{/if}
+	</div>
 	<br />
 	<fieldset>
 		<legend>{"_DBSETTINGS"|lang}</legend>

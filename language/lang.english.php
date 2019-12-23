@@ -579,4 +579,5 @@ define("_ERROR_PHP", "Please update your PHP Version to PHP 4.4.4 or higher.");
 define("_ERROR_REG_GLOBALS", "Please turn off your register_globals");
 define("_ERROR_MAGIC_QUOTES", "Please turn off your magic_quotes");
 define("_ERROR_GMP", "Please turn on bcmath and gmp");
+define("_WARNING_VERSION_PDO", 'Your MySQL client is old');
 ?>

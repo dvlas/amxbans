@@ -28,6 +28,8 @@ require_once("include/thumbs.inc.php");
 $title = "_TITLEBANLIST";
 $smarty = new dynamicPage;
 $user_site="";
+$smilies = null;
+$bbcodes = null;
 $ban_list = [];
 if(isset($_GET["bid"]) && is_numeric($_GET["bid"])) {
 	$_POST["bid"] = $_GET["bid"];

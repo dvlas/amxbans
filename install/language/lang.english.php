@@ -51,6 +51,7 @@ define("_SETUPNOTDELETABLE","File setup.php has to be deleted manually after set
 
 //step4
 define("_STEP4DESC","Getting the database information");
+define("_WARNING_VERSION_PDO", 'Your MySQL client is old');
 define("_DBSETTINGS","Database settings");
 define("_DBCHECK","Check access data");
 define("_CANTCONNECT","Access data wrong!");

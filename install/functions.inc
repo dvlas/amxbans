@@ -23,17 +23,17 @@
 function return_bytes($val) {
 	$val = trim($val);
 	$last = strtolower($val[strlen($val)-1]);
+	$count = (int)$val;
 	switch($last) {
 		// The 'G' modifier is available since PHP 5.1.0
 		case 'g':
-			$val *= 1024;
+            $count *= 1024;
 		case 'm':
-			$val *= 1024;
+            $count *= 1024;
 		case 'k':
-			$val *= 1024;
+            $count *= 1024;
 	}
-
-	return $val;
+	return $count;
 }
 
 function is__writable($path) {
@@ -54,14 +54,16 @@ function is__writable($path) {
         unlink($path);
     return true;
 }
-function sql_get_privilege($db) {
+function sql_get_privilege(PDO $db) {
 	$privileges=array();
 
 	//global privileges
-	$query=$db->query("SHOW GRANTS FOR CURRENT_USER()")	or die ($db->error);
-	$db_db = str_replace("_","\_",$_SESSION["dbdb"]);
-	while($row = $query->fetch_array()){
+	$query = $db->query("SHOW GRANTS FOR CURRENT_USER()") or die ($db->errorInfo());
+//	$db_db = str_replace("_","\_",$_SESSION["dbdb"]);
+	$db_db = $_SESSION["dbdb"];
+	while($row = $query->fetchAll()){
 		$v = $row[0];
+		$v = $v[0];
 		if(stristr($v,$db_db) || stristr($v,"*.*")) {
 			if(stristr($v,"ALL PRIVILEGES")) {
 				$privileges = array("SELECT","INSERT","UPDATE","DELETE","CREATE");

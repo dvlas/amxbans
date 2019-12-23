@@ -60,13 +60,14 @@ $userlevel_query="INSERT INTO `".$_SESSION["dbprefix"]."_levels` (`level`, `bans
 					(1, 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes')";
 //_webadmins
 $webadmin_query="INSERT INTO `".$_SESSION["dbprefix"]."_webadmins` (`id`, `username`, `password`, `level`, `email`) VALUES
-					(1, '".$mysql->escape_string($_SESSION["adminuser"])."', 
-					MD5('".$_SESSION["adminpass"]."'), 
+					(1, 
+					:adminuser, 
+					MD5(:adminpass), 
 					1, 
-					'".$mysql->escape_string($_SESSION["adminemail"])."')";
+					:adminemail)";
 //_logs
 $log_query="INSERT INTO `".$_SESSION["dbprefix"]."_logs` (`timestamp`, `ip`, `username`, `action`, `remarks`) VALUES
-					(UNIX_TIMESTAMP(NOW()), '".$_SERVER["REMOTE_ADDR"]."', '".$mysql->escape_string($_SESSION["adminuser"])."', 
+					(UNIX_TIMESTAMP(NOW()), :remoteaddr, :adminuser, 
 					'Install', 'Installation AMXBans v".$config->v_web."')";
 //module iexport
 $modules_install["iexport"]="INSERT INTO `".$_SESSION["dbprefix"]."_modulconfig` (`id`, `menuname`, `name`, `index`, `activ`) VALUES

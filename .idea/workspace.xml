@@ -1,7 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9fdcf78f-d173-46ca-b990-ce27ecdeda29" name="Default Changelist" comment="" />
+    <list default="true" id="9fdcf78f-d173-46ca-b990-ce27ecdeda29" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ban_list.php" beforeDir="false" afterPath="$PROJECT_DIR$/ban_list.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/config.inc.php" beforeDir="false" afterPath="$PROJECT_DIR$/include/config.inc.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/db.config.inc.php" beforeDir="false" afterPath="$PROJECT_DIR$/include/db.config.inc_.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/smarty/templates_c/%%2C^2C8^2C830EC2%%ban_list.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/smarty/templates_c/%%36^36B^36B8013A%%main_footer.tpl.php" beforeDir="false" afterPath="$PROJECT_DIR$/include/smarty/templates_c/%%36^36B^36B8013A%%main_footer.tpl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/smarty/templates_c/%%43^438^438FC765%%admin_ban_add_online.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/smarty/templates_c/%%6A^6A5^6A537DD8%%login.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/smarty/templates_c/%%72^729^729F949A%%admin_ban_add.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/smarty/templates_c/%%7A^7AD^7AD6A07A%%view.tpl.php" beforeDir="false" afterPath="$PROJECT_DIR$/include/smarty/templates_c/%%7A^7AD^7AD6A07A%%view.tpl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/smarty/templates_c/%%91^912^912211C9%%admin_list.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/smarty/templates_c/%%9D^9DD^9DDD4BE0%%admin_in.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/smarty/templates_c/%%AC^AC1^AC1385FF%%admin_index.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/smarty/templates_c/%%CF^CF0^CF0B35EB%%main_header.tpl.php" beforeDir="false" afterPath="$PROJECT_DIR$/include/smarty/templates_c/%%CF^CF0^CF0B35EB%%main_header.tpl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/smarty/templates_c/%%D0^D0B^D0BAFE5D%%search.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/install/datas.inc" beforeDir="false" afterPath="$PROJECT_DIR$/install/datas.inc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install/functions.inc" beforeDir="false" afterPath="$PROJECT_DIR$/install/functions.inc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install/language/lang.english.php" beforeDir="false" afterPath="$PROJECT_DIR$/install/language/lang.english.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install/language/lang.russian.php" beforeDir="false" afterPath="$PROJECT_DIR$/install/language/lang.russian.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install/step2.tpl" beforeDir="false" afterPath="$PROJECT_DIR$/install/step2.tpl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install/step4.tpl" beforeDir="false" afterPath="$PROJECT_DIR$/install/step4.tpl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install/tables.inc" beforeDir="false" afterPath="$PROJECT_DIR$/install/tables.inc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/language/lang.english.php" beforeDir="false" afterPath="$PROJECT_DIR$/language/lang.english.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/language/lang.russian.php" beforeDir="false" afterPath="$PROJECT_DIR$/language/lang.russian.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.php" beforeDir="false" afterPath="$PROJECT_DIR$/setup.php" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,17 +39,23 @@
       <executable />
     </execution>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="PhpDebugGeneral" xdebug_debug_port="9001" listening_started="true" />
   <component name="PhpServers">
     <servers>
       <server host="amxbans.local" id="9bbbaeb9-ee7b-415b-9a4d-6e12432d315e" name="amxbans.local" />
     </servers>
   </component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP72" />
   <component name="ProjectId" id="1VGODXxWTm0IUatJR5eZI7eltKY" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/include/backup" />
-    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php.debug" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -57,11 +89,51 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1576875845175</updated>
-      <workItem from="1576875846479" duration="7356000" />
+      <workItem from="1576875846479" duration="7596000" />
+      <workItem from="1576927019179" duration="603000" />
+      <workItem from="1577011342635" duration="2782000" />
+      <workItem from="1577024625699" duration="2120000" />
+      <workItem from="1577031383488" duration="3459000" />
+      <workItem from="1577045550779" duration="7876000" />
+      <workItem from="1577083733993" duration="10000" />
+      <workItem from="1577125492121" duration="64000" />
+      <workItem from="1577133155522" duration="761000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/ban_list.php</url>
+          <line>51</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="setup.php">
+        <watch expression="$pdo-&gt;query(&quot;SHOW TABLES FROM `&quot;.$dbdb.&quot;` LIKE '&quot;.$dbprefix.&quot;_%'&quot;)-&gt;columnCount()" language="PHP" />
+      </configuration>
+      <configuration name="PhpWebAppRunConfigurationType">
+        <watch expression="new PDO($connectStr,$dbuser,'')" language="PHP" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

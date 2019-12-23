@@ -6,7 +6,7 @@
 	$config->db_host = "127.0.0.1";
 	$config->db_user = "root";
 	$config->db_pass = "";
-	$config->db_db = "amxbans_test";
+	$config->db_db = "amxbans";
 	$config->db_prefix = "amx";
 	
 ?>

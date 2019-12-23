@@ -21,7 +21,7 @@
 */
 
 // setting version - DO NOT EDIT THIS
-@$config->v_web = "6.14.4";
+@$config->v_web = "6.14.4.1";
 
 // if necessary - calling install procedure
 if(file_exists("setup.php") && !file_exists("include/db.config.inc.php")) {
@@ -77,7 +77,7 @@ $config->langfilesdir	= $config->path_root."/language/";
 $vars=sql_set_websettings();
 
 //save current language to session
-if(!$_SESSION["lang"]) $_SESSION["lang"]=$config->default_lang;
+if(!isset($_SESSION["lang"])) $_SESSION["lang"]=$config->default_lang;
 
 //load smilies to global array
 if(empty($smilies)) {

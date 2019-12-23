@@ -7,10 +7,10 @@
 			<td>PHP {"_VERSION"|lang}</td>
 			<td><img src="images/{if $php_settings.version_php >=5.0}success{else}warning{/if}.gif" /> {$php_settings.version_php}</td>
 		</tr>
-		<tr class="settings_line">
-			<td>MySQL {"_VERSION"|lang}</td>
-			<td><img src="images/{if $php_settings.mysql_version >=4.1}success{else}warning{/if}.gif" /> {$php_settings.mysql_version}</td>
-		</tr>
+{*		<tr class="settings_line">*}
+{*			<td>MySQL {"_VERSION"|lang}</td>*}
+{*			<td><img src="images/{if $php_settings.mysql_version >=4.1}success{else}warning{/if}.gif" /> {$php_settings.mysql_version}</td>*}
+{*		</tr>*}
 		<tr class="settings_line">
 			<td width="40%">safe_mode</td>
 			<td valign="center"><img src="images/{if $php_settings.safe_mode=="_ON"}success{else}warning{/if}.gif" /> {$php_settings.safe_mode|lang}</td>

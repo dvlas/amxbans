@@ -21,7 +21,7 @@
 */
 function log_to_db($action,$remarks) {
 	global $config, $mysql;
-	$query = $mysql->query("INSERT INTO `".$config->db_prefix."_logs` (
+	$query = $mysql->prepare("INSERT INTO `".$config->db_prefix."_logs` (
 			`id` ,
 			`timestamp` ,
 			`ip` ,
@@ -30,9 +30,15 @@ function log_to_db($action,$remarks) {
 			`remarks` 
 			)
 			VALUES (
-			NULL , UNIX_TIMESTAMP(), '".$_SERVER["REMOTE_ADDR"]."', '".$_SESSION["uname"]."', '".sql_safe($action)."', '".sql_safe($remarks)."'
+			NULL , UNIX_TIMESTAMP(), :remote_addr, :uname, :action, :remarks'
 			);
 		") or die ($mysql->error);
+	$query->execute([
+	    ':remote_addr' => $_SERVER["REMOTE_ADDR"],
+        ':uname' => $_SESSION["uname"],
+        ':action' => $action,
+        ':remarks' => $remarks
+    ]);
 }
 
 ?>

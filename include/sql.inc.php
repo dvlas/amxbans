@@ -567,11 +567,11 @@ function sql_get_search_reasons() {
 }
 function sql_get_search_bans($search,$active=1,&$count=0) {
 	global $config, $mysql;
-	$query = $mysql->query("SELECT * FROM `".$config->db_prefix."_bans` WHERE ".$search." AND `expired`=".(($active==1)?0:1)." ORDER BY `ban_created` DESC") or die ($mysql->error);
+	$query = $mysql->prepare("SELECT * FROM `".$config->db_prefix."_bans` WHERE ".$search." AND `expired`= :expired ORDER BY `ban_created` DESC") or die ($mysql->error);
+    $query->execute([':expired' => (($active==1)?0:1)]);
 	//Array aufbereiten
 	
 	$ban_list = [];
-	$query->execute();
 	while($result = $query->fetch(PDO::FETCH_OBJ)) {
 		if(!empty($result->player_id)) {
 			$steamid = htmlentities($result->player_id, ENT_QUOTES);
@@ -633,10 +633,13 @@ function sql_get_bans_count($activ_only = TRUE) {
 }
 function sql_get_logs($filter) {
 	global $config, $mysql;
-	if($filter) $where="WHERE ".$filter;
+    $where = "";
+	if($filter) $where = "WHERE ".$filter;
 	$query = $mysql->query("SELECT * FROM `".$config->db_prefix."_logs` ".$where." ORDER BY `timestamp` DESC") or die ($mysql->error);
+	$query->execute();
 	//Array aufbereiten
-	while ($row=$query->fetch_assoc())
+    $rows = [];
+	while ($row = $query->fetch(PDO::FETCH_ASSOC))
 		$rows[] = $row;
 	array_walk_recursive($rows,"html_safe");
 	return $rows;

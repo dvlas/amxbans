@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.25, created on 2019-12-24 00:01:59
+<?php /* Smarty version 2.6.25, created on 2019-12-25 00:25:17
          compiled from ban_list.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'lang', 'ban_list.tpl', 13, false),array('modifier', 'date_format', 'ban_list.tpl', 127, false),array('modifier', 'date2word', 'ban_list.tpl', 136, false),)), $this); ?>

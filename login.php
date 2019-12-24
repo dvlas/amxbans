@@ -38,8 +38,8 @@ $loginfailed = false;
 if(isset($_POST["action"])) {
 	global $config;
 	
-	$uname = sql_safe($_POST["user"]);
-	$upass = sql_safe($_POST["pass"]);
+	$uname = $_POST["user"];
+	$upass = $_POST["pass"];
 	if(!$uname || !$upass) {
 	    if(!isset($_SESSION["loginfailed"])){
             $_SESSION["loginfailed"] = 0;
@@ -51,9 +51,10 @@ if(isset($_POST["action"])) {
 
 	if(!$msg) {
 		//check if username exists
-		$query = $mysql->query("SELECT last_action,try FROM `".$config->db_prefix."_webadmins` WHERE username='$uname' LIMIT 1");
-		if($query->num_rows) {
-			$result = $query->fetch_object();
+		$query = $mysql->prepare("SELECT last_action,try FROM `".$config->db_prefix."_webadmins` WHERE username=:useradmin LIMIT 1");
+		$query->execute([':useradmin' => $uname]);
+		if($query->rowCount()) {
+			$result = $query->fetch(PDO::FETCH_OBJ);
 			$try=$result->try;
 			$last_action=$result->last_action;
 			
@@ -65,21 +66,23 @@ if(isset($_POST["action"])) {
 					$loginblocked=true;
 				} else {
 					//delete wrong trys
-					$query2 = $mysql->query("UPDATE `".$config->db_prefix."_webadmins` SET `try`=0 WHERE username='$uname' LIMIT 1");
+					$query2 = $mysql->prepare("UPDATE `".$config->db_prefix."_webadmins` SET `try`=0 WHERE username=:useradmin LIMIT 1");
+                    $query2->execute([':useradmin' => $uname]);
 					$try=0;
 				}
 			} 
 			if(!$loginblocked) {
 				//check username and password
-				$query = $mysql->query("SELECT id,level,email FROM `".$config->db_prefix."_webadmins` WHERE username='$uname' AND password=MD5('$upass') LIMIT 1");
-				if($query->num_rows) {
+				$query = $mysql->prepare("SELECT id,level,email FROM `".$config->db_prefix."_webadmins` WHERE username=:useradmin AND password=MD5('$upass') LIMIT 1");
+                $query->execute([':useradmin' => $uname]);
+				if($query->rowCount()) {
 					$_SESSION["loginfailed"]=0;
 					//login ok
 					if(isset($_POST["remember"])) {
 						//set cookie, 7 days valid
 						setcookie($config->cookie,session_id().":".$_SESSION["lang"],time()+(((60*60)*24)*7),"/",$_SERVER["HTTP_HOST"]);
 					}
-					$result = $query->fetch_object();
+					$result = $query->fetch(PDO::FETCH_OBJ);
 					
 					$_SESSION["uid"]=$result->id;
 					$_SESSION["uname"]=$uname;
@@ -88,8 +91,9 @@ if(isset($_POST["action"])) {
 					$_SESSION["sid"]=session_id();
 					$_SESSION["loggedin"]=true;
 						
-					$query = $mysql->query("SELECT * FROM `".$config->db_prefix."_levels` WHERE level=".$_SESSION["level"]." LIMIT 1");
-					$result = $query->fetch_object();
+					$query = $mysql->prepare("SELECT * FROM `".$config->db_prefix."_levels` WHERE level= :level LIMIT 1");
+					$query->execute([':level' => $_SESSION["level"]]);
+					$result = $query->fetch(PDO::FETCH_OBJ);
 					$_SESSION['bans_add'] = $result->bans_add;
 					$_SESSION['bans_edit'] = $result->bans_edit;
 					$_SESSION['bans_delete'] = $result->bans_delete;
@@ -107,7 +111,8 @@ if(isset($_POST["action"])) {
 					$_SESSION['servers_edit'] = $result->servers_edit;
 					$_SESSION['ip_view'] = $result->ip_view;
 
-					$mysql->query("UPDATE `".$config->db_prefix."_webadmins` SET `logcode`='".session_id()."',`last_action`=UNIX_TIMESTAMP(),`try`=0 WHERE `id`=".$_SESSION["uid"]);
+					$result = $mysql->prepare("UPDATE `".$config->db_prefix."_webadmins` SET `logcode`= :session_id,`last_action`=UNIX_TIMESTAMP(),`try`=0 WHERE `id`= :sessionUID");
+                    $result->execute([':session_id' => session_id(), ':sessionUID' => $_SESSION["uid"]]);
 					#$msg="_LOGINOK";
 					header("Location:index.php");
 					exit;

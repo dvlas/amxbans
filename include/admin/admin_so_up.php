@@ -32,9 +32,10 @@ $update_url = "http://www.amxbans.net/version.php?web";
 
 
 //get version from servers
-$query=$mysql->query("SELECT `address`,`amxban_version` FROM `".$config->db_prefix."_serverinfo` ORDER BY `address`") or die($mysql->error);
+$query = $mysql->query("SELECT `address`,`amxban_version` FROM `".$config->db_prefix."_serverinfo` ORDER BY `address`") or die($mysql->error);
+$query->execute();
 $version_server=array();
-while($result = $query->fetch_object()) {
+while($result = $query->fetch(PDO::FETCH_OBJ)) {
 	$version=array(
 		"address"=>$result->address,
 		"version"=>$result->amxban_version

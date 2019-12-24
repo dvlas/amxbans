@@ -110,12 +110,14 @@ if(!$user_site) {
 						"expired"		=> $result->expired,
                 );
                 // get previous offences if any
-				$query2   = $mysql->query("SELECT count(player_id) as ban_count FROM `".$config->db_prefix."_bans` WHERE player_id = '".$result->player_id."'") or die($mysql->error);
-                while($result2 = $query2->fetch_object()) {
+				$query2 = $mysql->query("SELECT count(player_id) as ban_count FROM `".$config->db_prefix."_bans` WHERE player_id = '".$result->player_id."'") or die($mysql->error);
+				$query2->execute();
+                while($result2 = $query2->fetch(PDO::FETCH_OBJ)) {
                         $ban_row["bancount"] = $result2->ban_count;
                 }
 				$queryX = $mysql->query("SELECT count(player_id) as ban_count FROM `".$config->db_prefix."_bans` WHERE player_id = '".$result->player_id."' AND (ban_length > 5 OR ban_length = 0)") or die($mysql->error);
-				while($resultX = $queryX->fetch_object()) {
+                $queryX->execute();
+				while($resultX = $queryX->fetch(PDO::FETCH_OBJ)) {
 						$tmp_bancount = $resultX->ban_count;
 				}
 				

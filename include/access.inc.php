@@ -42,8 +42,9 @@ if($cookie_tmp != "" && $_SESSION["loggedin"]==false) {
 		if(!$_SESSION["lang"]) $_SESSION["lang"]=$cook[1];
 
 		$query = $mysql->query("SELECT id,username,level,email FROM `".$config->db_prefix."_webadmins` WHERE logcode='".$sid."' LIMIT 1") or die ($mysql->error);
-		if($query->num_rows) {
-			$result = $query->fetch_object();
+		$query->execute();
+		if($query->rowCount()) {
+			$result = $query->fetch(PDO::FETCH_OBJ);
 			$_SESSION["uid"]=$result->id;
 			$_SESSION["uname"]=$result->username;
 			$_SESSION["email"]=$result->email;
@@ -52,7 +53,8 @@ if($cookie_tmp != "" && $_SESSION["loggedin"]==false) {
 			$_SESSION["loggedin"]=true;
 
 			$query = $mysql->query("SELECT * FROM `".$config->db_prefix."_levels` WHERE level=".$_SESSION["level"]." LIMIT 1") or die ($mysql->error);
-			$result = $query->fetch_object();
+			$query->execute();
+			$result = $query->fetch(PDO::FETCH_OBJ);
 			$_SESSION['bans_add'] = $result->bans_add;
 			$_SESSION['bans_edit'] = $result->bans_edit;
 			$_SESSION['bans_delete'] = $result->bans_delete;

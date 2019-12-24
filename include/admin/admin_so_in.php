@@ -30,7 +30,9 @@
 	//optimize tables
 	if(isset($_POST["optimize"]) && $_SESSION["loggedin"]) {
 		$query = $mysql->query("SHOW TABLES FROM `" . $config->db_db. "` LIKE '".$config->db_prefix."_%'");
-		while($result = $query->fetch_row()) {
+		$query->execute();
+        $tables = "";
+		while($result = $query->fetch()) {
 			$tables.=(($tables)?",":"")."`".$result[0]."`";
 		}
 		$query = $mysql->query("OPTIMIZE TABLES ".$tables);
@@ -42,14 +44,17 @@
 	if(isset($_POST["prunedb"]) && $_SESSION["loggedin"]) {
 		$query=$mysql->query("SELECT ba.bid,ba.ban_created,ba.ban_length,se.timezone_fixx FROM ".$config->db_prefix."_bans as ba 
 							LEFT JOIN ".$config->db_prefix."_serverinfo AS se ON ba.server_ip=se.address WHERE ba.expired=0");
+		$query->execute();
 		$prunecount=0;
-		while($result = $query->fetch_object()) {
+		while($result = $query->fetch(PDO::FETCH_OBJ)) {
 			//prune expired bans
 			if(($result->ban_created + ($result->timezone_fixx * 60 * 60) + ($result->ban_length * 60)) < time() && $result->ban_length != "0") {
 				$prunecount++;
 				$prune_query = $mysql->query("UPDATE `".$config->db_prefix."_bans` SET `expired`=1 WHERE `bid`=".$result->bid);
+				$prune_query->execute();
 				$prune_query = $mysql->query("INSERT INTO `".$config->db_prefix."_bans_edit` (`bid`,`edit_time`,`admin_nick`,`edit_reason`) VALUES (
 								'".$result->bid."','".($result->ban_created + ($result->timezone_fixx * 60 * 60) + ($result->ban_length * 60))."','amxbans','Bantime expired')");
+				$prune_query->execute();
 			}
 		}
 		$smarty->assign("prunecount",$prunecount);
@@ -110,11 +115,11 @@
 	function db_size($name,$prefix) {
 		global $mysql;
 		$db_size = 0;
-
 		$query = $mysql->query("SHOW TABLE STATUS FROM `" . $name. "` LIKE '".$prefix."_%'");
+		$query->execute();
 		if (!$query)
 			return "_NOTAVAILABLE";
-		while ($value = $query->fetch_assoc())
+		while ($value = $query->fetch())
 			$db_size += $value["Data_length"] + $value['Index_length'];
 
 		return $db_size;

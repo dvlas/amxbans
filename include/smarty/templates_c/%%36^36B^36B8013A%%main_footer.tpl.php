@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.25, created on 2019-12-23 23:44:02
+<?php /* Smarty version 2.6.25, created on 2019-12-25 00:05:56
          compiled from main_footer.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'lang', 'main_footer.tpl', 2, false),)), $this); ?>

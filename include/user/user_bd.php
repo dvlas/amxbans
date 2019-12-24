@@ -1,6 +1,5 @@
 <?php
-
-/* 	
+/*
 
 	AMXBans v6.0
 	
@@ -19,9 +18,7 @@
 	If not, see <http://creativecommons.org/licenses/by-nc-sa/2.0/>.
 
 */
-
 session_start();
-	
 if(!isset($_POST["bid"]) && !is_numeric($_POST["bid"])) {
 	header("Location:index.php");
 	exit;
@@ -298,7 +295,9 @@ $exp_count=0;
 $ban_details_exp=sql_get_ban_details_exp($ban_details["player_id"],$exp_count,$bid);
 //ban edits holen
 $query=$mysql->query("SELECT * FROM ".$config->db_prefix."_bans_edit WHERE bid=".$bid);
-while($row=$query->fetch_assoc()) {
+$query->execute();
+$edit_count = 0;
+while($row=$query->fetch()) {
 	$edit_count++;
 	$ban_details_edits[]=$row;
 }

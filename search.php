@@ -45,7 +45,7 @@ $servers=sql_get_search_servers();
 //$reasons=sql_get_search_reasons();
 
 $msg = "";
-
+$search_query = "";
 if ((isset($_POST['nick'])) || (isset($_POST['steamid'])) || (isset($_POST['ip'])) || (isset($_POST['reason'])) || (isset($_POST['date'])) || (isset($_POST['timesbanned'])) || (isset($_POST['admin'])) || (isset($_POST['server']))) {
 	
 	if(isset($_POST["nick"])) {
@@ -93,23 +93,26 @@ if ((isset($_POST['nick'])) || (isset($_POST['steamid'])) || (isset($_POST['ip']
 	}
 	$count_aktiv=0;
 	$count_exp=0;
+    $ban_list_exp = [];
+    $ban_list_aktiv = [];
 	if($search_query) {
-		$ban_list_aktiv=sql_get_search_bans($search_query,1,$count_aktiv);
-		$ban_list_exp=sql_get_search_bans($search_query,0,$count_exp);
+		$ban_list_aktiv = sql_get_search_bans($search_query,1,$count_aktiv);
+		$ban_list_exp = sql_get_search_bans($search_query,0,$count_exp);
 	}
-	
-	if(isset($_POST["timesbanned"]) && is_numeric($_POST["timesbanned"])) {
-		$query = $mysql->query("SELECT *,COUNT(*) as bancount FROM ".$config->db_prefix."_bans GROUP BY player_id HAVING COUNT(*) >= ".(int)$_POST["timesbanned"]." ORDER BY ban_created DESC,player_id");
 
-		while($result = $query->fetch_object()) {
+	if(isset($_POST["timesbanned"]) && is_numeric($_POST["timesbanned"])) {
+		$query = $mysql->prepare("SELECT *,COUNT(*) as bancount FROM ".$config->db_prefix."_bans GROUP BY player_id HAVING COUNT(*) >=:timesbanned ORDER BY ban_created DESC,player_id");
+        $query->execute([':timesbanned' => (int)$_POST["timesbanned"]]);
+		while($result = $query->fetch(PDO::FETCH_OBJ)) {
 			if(!empty($result->player_id)) {
 				$steamid = html_safe($result->player_id);
 				$steamcomid = GetFriendId($steamid);
 			}
 			//search for a activ ban and make it as ref
-			$query2=$mysql->query("SELECT * FROM ".$config->db_prefix."_bans WHERE `player_id`='".$result->player_id."' AND `expired`=0 ORDER BY ban_created DESC LIMIT 1");
-			if($query2->num_rows) {
-				$result2 = $query2->fetch_object();
+			$query2=$mysql->prepare("SELECT * FROM ".$config->db_prefix."_bans WHERE `player_id`= :player_id AND `expired`=0 ORDER BY ban_created DESC LIMIT 1");
+			$query2->execute([':player_id' => $result->player_id]);
+			if($query2->rowCount()) {
+				$result2 = $query2->fetch(PDO::FETCH_OBJ);
 				$result2->bancount=$result->bancount;
 				$result=$result2;
 			}
